@@ -1,0 +1,39 @@
+# Относить HTML файлы как "vendored" (сторонние/сгенерированные)
+*.html linguist-vendored
+*.htm linguist-vendored
+
+# Относить все файлы в templates как сгенерированные
+templates/** linguist-vendored
+
+# Явно указать тип для Java файлов
+*.java linguist-detectable
+
+# Игнорировать статические ресурсы
+*.css linguist-vendored
+*.js linguist-vendored
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+
+# Игнорировать конфигурационные файлы
+*.yml linguist-vendored
+*.yaml linguist-vendored
+*.properties linguist-vendored
+*.xml linguist-vendored
+*.json linguist-vendored
+*.md linguist-vendored
+*.txt linguist-vendored
+*.sql linguist-vendored
+
+# Игнорировать бинарные файлы и сборки
+target/ linguist-vendored
+build/ linguist-vendored
+*.class linguist-vendored
+*.jar linguist-vendored
+*.war linguist-vendored
+*.ear linguist-vendored
+
+# Игнорировать все ресурсы
+src/main/resources/** linguist-vendored
