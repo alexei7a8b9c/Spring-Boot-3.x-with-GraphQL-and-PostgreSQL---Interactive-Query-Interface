@@ -1,0 +1,90 @@
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# Spring Configuration
+spring:
+  application:
+    name: graphql-postgres-demo
+  
+  # PostgreSQL Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookdb
+    username: pos
+    password: 1234567  # Change this to your actual password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: HikariCP-BookDB
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        use_sql_comments: true
+    open-in-view: false
+  
+  # GraphQL Configuration
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
+      subscription:
+        path: /subscriptions
+    schema:
+      printer:
+        enabled: true
+    websocket:
+      path: /graphql-ws
+  
+  # Thymeleaf Configuration
+  thymeleaf:
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+    check-template-location: true
+  
+  # Actuator Configuration
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info,metrics,graphql
+    endpoint:
+      health:
+        show-details: always
+
+# Logging Configuration
+logging:
+  level:
+    com.example.demo: DEBUG
+    org.springframework.graphql: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %highlight(%-5level) - %cyan(%logger{36}) - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/graphql-app.log

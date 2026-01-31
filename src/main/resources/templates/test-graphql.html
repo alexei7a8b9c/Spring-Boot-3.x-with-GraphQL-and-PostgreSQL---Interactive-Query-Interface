@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GraphQL Test</title>
+    <script src="https://unpkg.com/@apollo/client@latest"></script>
+</head>
+<body>
+<h2>GraphQL Test Console</h2>
+<div>
+    <h3>Query:</h3>
+    <textarea id="query" rows="6" cols="80">
+{
+  books {
+    id
+    title
+    author
+    publisher
+  }
+}</textarea>
+    <br>
+    <button onclick="executeQuery()">Execute</button>
+</div>
+<div>
+    <h3>Response:</h3>
+    <pre id="response"></pre>
+</div>
+
+<script>
+    async function executeQuery() {
+        const query = document.getElementById('query').value;
+        const responseEl = document.getElementById('response');
+
+        try {
+            const response = await fetch('http://localhost:8080/graphql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query
+                })
+            });
+
+            const data = await response.json();
+            responseEl.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+            responseEl.textContent = 'Error: ' + error.message;
+        }
+    }
+</script>
+</body>
+</html>
